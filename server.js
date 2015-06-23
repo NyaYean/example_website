@@ -22,10 +22,45 @@ app.post('/users', function(req, res){
 
 app.get('/users', function(req, res){
 		User
-		  .findAll()
+		  .findAll({include: Product})
 		  .then(function(product){
 		  	res.send(product);
 		  });
+});
+
+app.get('/user/:id', function(req,res){
+	User
+		.findById(req.params.id)
+		.then(function(products){
+			res.send(products)
+		});
+});
+
+app.put('/user/:id', function(req,res){
+	var userID = req.params.id;
+	var userParams = req.body;
+
+	User
+		.findById(userID)
+		.then(function(user){
+			user
+			.update(userParams)
+			.then(function(updatedUser){
+				res.send(updatedUser);
+			});
+		});
+});
+
+app.delete("/user/:id", function(req,res){
+	User
+		.findById(req.params.id)
+		.then(function(user){
+			user
+			.destroy()
+			.then(function(){
+				res.send(user)
+			});
+		});
 });
 
 app.post('/products', function(req,res){
@@ -33,8 +68,17 @@ app.post('/products', function(req,res){
 		.create(req.body)
 		.then(function(newProduct){
 			res.send(newProduct)
-		})
-})
+		});
+});
+
+app.get('/products', function(req,res){
+	Product
+	  .findAll()
+	  .then(function(products){
+	  	res.send(products)
+	  });
+});
+
 
 
 

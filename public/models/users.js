@@ -4,15 +4,9 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     age: DataTypes.INTEGER
   }, {
-
-    timestamps: false,
-
     classMethods: {
       associate: function(models) {
-        users.belongsToMany(models.products, {
-          through: 'users_products',
-          foreignKey: "user_id"
-        })
+        users.hasMany(models.products, {foreignKey: 'product_id'});
       }
     }
   });

@@ -2,17 +2,12 @@
 module.exports = function(sequelize, DataTypes) {
   var products = sequelize.define('products', {
     name: DataTypes.STRING,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    product_id: DataTypes.INTEGER
   }, {
-
-    timestamps: false,
-
     classMethods: {
       associate: function(models) {
-        products.belongsToMany(models.users, {
-          through: 'users_products',
-          foreignKey: 'product_id'
-        })
+        products.belongsTo(models.artists, {foreignKey: 'product_id'})
       }
     }
   });
